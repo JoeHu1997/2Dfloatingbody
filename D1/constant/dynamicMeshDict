@@ -1,0 +1,116 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dynamicFvMesh       dynamicMotionSolverFvMesh;
+
+motionSolverLibs    ("libsixDoFRigidBodyMotionCoupled.so");
+
+motionSolver        sixDoFRigidBodyMotion;
+
+sixDoFRigidBodyMotionCoeffs
+{
+    patches         (floatingObject);
+    innerDistance   0.004;
+    outerDistance   0.4;
+
+    centreOfMass    (20.15 0.45 0.9 );
+
+    // Cuboid dimensions
+    Lx              0.3;
+    Ly              0.9;
+    Lz              0.1;
+
+    // Density of the solid
+    rhoSolid        500;
+
+    // Cuboid mass
+     mass            13.5;
+
+    // Cuboid moment of inertia about the centre of mass
+    momentOfInertia (0.9225    0.1125    1.0125);
+
+    report          on;
+    accelerationRelaxation 0.95;
+    accelerationDamping 1;
+    tightlyType		2;
+	tightlyMoment	false;
+
+    solver
+    {
+        type Newmark;
+    }
+
+    constraints
+    {
+        // fixedPoint
+        // {
+        //     sixDoFRigidBodyMotionConstraint point;
+        //     centreOfRotation (0.5 0.45 0.1);
+        // }
+
+        //fixedLine
+        //{
+        //    sixDoFRigidBodyMotionConstraint line;
+        //    centreOfRotation (0.5 0.45 0.1);
+        //    direction (0 1 0);
+        //}
+
+        fixedAxis
+        {
+            sixDoFRigidBodyMotionConstraint axis;
+            axis (0 1 0 );
+        }
+    }
+    restraints
+	{
+			cable1
+			{
+				sixDoFRigidBodyMotionRestraint	catenary;
+				anchor 							(19.9 0 0 );
+				refAttachmentPt					(20 0 0.85);
+				restLength						0.9;
+				Cable_no						1;
+			}
+			cable2
+			{
+				sixDoFRigidBodyMotionRestraint	catenary;
+				anchor 							(19.9 0.9 0);
+				refAttachmentPt					(20 0.9 0.85);
+				restLength						0.9;
+				Cable_no						2;
+			}
+			cable3
+			{
+				sixDoFRigidBodyMotionRestraint	catenary;
+				anchor 							(20.4 0 0);
+				refAttachmentPt					(20.3 0 0.85);
+				restLength						0.9;
+				Cable_no						3;				
+			}
+			cable4
+			{
+				sixDoFRigidBodyMotionRestraint	catenary;
+				anchor 							(20.4 0.01 0);
+				refAttachmentPt					(20.3 0.01 0.85);
+				restLength						0.9;
+				Cable_no						4;
+			}
+	}
+
+}
+
+
+// ************************************************************************* //
