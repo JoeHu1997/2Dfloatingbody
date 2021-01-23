@@ -103,8 +103,8 @@ sixDoFRigidBodyMotionCoeffs
 			cable4
 			{
 				sixDoFRigidBodyMotionRestraint	catenary;
-				anchor 							(20.4 0.01 0);
-				refAttachmentPt					(20.3 0.01 0.85);
+				anchor 							(20.4 0.9 0);
+				refAttachmentPt					(20.3 0.9 0.85);
 				restLength						0.9;
 				Cable_no						4;
 			}

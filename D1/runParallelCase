@@ -24,7 +24,7 @@ echo Decomposing case...
 decomposePar > log.decomposePar 
   
 echo Running... 
-mpirun -np 6 --hostfile machines --rankfile rankfile CoupledinterDyMFoam -parallel > log.CoupledinterDyMFoam
+mpirun -np 12 --hostfile machines --rankfile rankfile CoupledinterDyMFoam -parallel > log.CoupledinterDyMFoam
 
 
 echo Simulation complete. 
